@@ -1,36 +1,47 @@
+import axios from 'axios'
 import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
   GraphQLSchema,
   GraphQLList,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLBoolean
 } from 'graphql';
+
+
+const UserInfoType = new GraphQLObjectType({
+ name: 'UserInfo',
+ description: 'Basic information on a GitHub user',
+ fields: () => ({
+   'login': { type: GraphQLString },
+   'id': { type: GraphQLInt },
+   'avatar_url': { type: GraphQLString },
+   "site_admin": { type: GraphQLBoolean }
+  })
+});
 
 const query = new GraphQLObjectType({
   name: 'Query',
   description: 'First GraphQL Server Config — Yay!',
   fields: () => ({
-    hello: {
-      type: GraphQLString,
-      description: "Accepts a name so you can be nice and say hi",
+    gitHubUser: {
+      type: UserInfoType,
+      description: 'GitHub user API data with enhanced and additional data',
       args: {
-        name: {
+        username: {
           type: new GraphQLNonNull(GraphQLString),
-          description: 'Name you want to say hi to :)',
-        }
+          description: 'The GitHub user login you want information on',
+        },
       },
-      resolve: (_,args) => {
-        return `Hello, ${args.name}!!!`;
+      resolve: (_,{username}) => {
+        const url = `https://api.github.com/users/${username}`;
+        return axios.get(url)
+                    .then(function(response) {
+                      return response.data;
+                    });
       }
     },
-    luckyNumber: {
-      type: GraphQLInt,
-      description: 'A lucky number',
-      resolve: () => {
-        return 888;
-      }
-    }
   })
 });
 
@@ -39,4 +50,6 @@ const schema = new GraphQLSchema({
 });
 
 export default schema;
+
+
 
