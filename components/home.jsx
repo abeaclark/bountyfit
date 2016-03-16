@@ -1,7 +1,7 @@
 import React from 'react';
 var ReactDOM = require('react-dom');
 
-var MainContainer = React.createClass({
+var Home = React.createClass({
   getInitialState: function() {
     return {}
   },
@@ -17,7 +17,4 @@ var MainContainer = React.createClass({
   }
 });
 
-var mainContainer = ReactDOM.render(
-  <MainContainer />,
-  document.getElementById('react-mount')
-);
+export default Home

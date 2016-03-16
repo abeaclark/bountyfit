@@ -6,7 +6,7 @@ var babelify = require('babelify');
 
 
 gulp.task('js', function(){
-    browserify('./components/main.jsx')
+    browserify('./components/router.jsx')
         .transform(babelify, {presets: ["es2015", "react"]})
         .bundle()
         .pipe(source('app.js'))
