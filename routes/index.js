@@ -1,16 +1,23 @@
 var express = require('express');
 var router = express.Router();
-var FitbitApiClient = require("fitbit-node")
 
+import { graphql } from 'graphql';
+import bodyParser from 'body-parser';
+
+var FitbitApiClient = require("fitbit-node")
 var client = new FitbitApiClient(process.env.fitbit_client_id, process.env.fitbit_client_secret);
 
-console.log(client.getAccessToken)
+
+
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+// router.use(bodyParser.text({ type: 'application/graphql' }));
 
 router.get("/authorize", function (req, res) {
     res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:3000/callback'));

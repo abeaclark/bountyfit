@@ -1,13 +1,17 @@
 var express = require('express');
+require('babel-register');
 require('dotenv').config();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var graphqlHTTP = require('express-graphql');
+var GraphQLSchema = require('./models/schema.js');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
 
 var app = express();
 
@@ -23,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/graphql', graphqlHTTP({ schema: GraphQLSchema, graphiql: true }));
 app.use('/', routes);
 app.use('/users', users);
 
