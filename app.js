@@ -6,8 +6,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var graphqlHTTP = require('express-graphql');
-var GraphQLSchema = require('./models/schema.js');
+import GraphQLHTTP from 'express-graphql'
+import schema from './models/schema.js'
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -27,7 +27,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/graphql', graphqlHTTP({ schema: GraphQLSchema, graphiql: true }));
+app.use('/graphql', GraphQLHTTP({
+  schema,
+  graphiql: true
+  })
+);
+
 app.use('/', routes);
 app.use('/users', users);
 

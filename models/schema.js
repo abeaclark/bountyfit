@@ -1,23 +1,42 @@
 import {
   GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
   GraphQLSchema,
-  GraphQLInt
+  GraphQLList,
+  GraphQLNonNull
 } from 'graphql';
 
-let count = 0;
-
-let schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'RootQueryType',
-    fields: {
-      count: {
-        type: GraphQLInt,
-        resolve: function() {
-          return count;
+const query = new GraphQLObjectType({
+  name: 'Query',
+  description: 'First GraphQL Server Config — Yay!',
+  fields: () => ({
+    hello: {
+      type: GraphQLString,
+      description: "Accepts a name so you can be nice and say hi",
+      args: {
+        name: {
+          type: new GraphQLNonNull(GraphQLString),
+          description: 'Name you want to say hi to :)',
         }
+      },
+      resolve: (_,args) => {
+        return `Hello, ${args.name}!!!`;
+      }
+    },
+    luckyNumber: {
+      type: GraphQLInt,
+      description: 'A lucky number',
+      resolve: () => {
+        return 888;
       }
     }
   })
 });
 
+const schema = new GraphQLSchema({
+ query
+});
+
 export default schema;
+
