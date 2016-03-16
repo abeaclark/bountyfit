@@ -1,22 +1,34 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Router, Route, Link, browserHistory } from 'react-router'
+import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
 // Components
-import Home from './home.jsx'
-
-const About =  React.createClass({
+var Home = React.createClass({
   render: function() {
     return (
-      <div>About</div>
+      <div>
+        React Home
+        {this.props.children}
+        <Link to="/about">About</Link>
+      </div>
     )
   }
 });
 
+class About extends React.Component {
+ render() {
+  return <div onClick={this._handleClick}>About
+  </div>;
+ }
+ _handleClick() {
+  console.log(Home);
+ }
+}
+
 const Users =  React.createClass({
   render: function() {
     return (
-      <div>About</div>
+      <div>Users</div>
     )
   }
 });
@@ -24,7 +36,7 @@ const Users =  React.createClass({
 const User =  React.createClass({
   render: function() {
     return (
-      <div>About</div>
+      <div>User</div>
     )
   }
 });
@@ -32,7 +44,7 @@ const User =  React.createClass({
 const UnknownRoute =  React.createClass({
   render: function() {
     return (
-      <div>About</div>
+      <div>Unknown Route</div>
     )
   }
 });
