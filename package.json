@@ -16,7 +16,7 @@
     "debug": "~2.2.0",
     "dotenv": "^2.0.0",
     "express": "~4.13.1",
-    "fitbit-node": "^1.0.0",
+    "fitbit-node": "lukasolson/fitbit-node",
     "gulp": "^3.9.1",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",

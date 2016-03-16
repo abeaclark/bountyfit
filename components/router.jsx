@@ -3,12 +3,13 @@ import { render } from 'react-dom'
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
 // Components
-var Home = React.createClass({
+var Login = React.createClass({
   render: function() {
     return (
       <div>
-        React Home
+        React Login
         {this.props.children}
+        <a href="/authorize">Authorize</a>
         <Link to="/about">About</Link>
       </div>
     )
@@ -52,7 +53,7 @@ const UnknownRoute =  React.createClass({
 
 render((
   <Router history={browserHistory}>
-    <Route path="/" component={Home}>
+    <Route path="/" component={Login}>
       <Route path="about" component={About}/>
       <Route path="users" component={Users}>
         <Route path="/user/:userId" component={User}/>

@@ -20,15 +20,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 // Components
-var Home = _react2.default.createClass({
-  displayName: 'Home',
+var Login = _react2.default.createClass({
+  displayName: 'Login',
 
   render: function render() {
     return _react2.default.createElement(
       'div',
       null,
-      'React Home',
+      'React Login',
       this.props.children,
+      _react2.default.createElement(
+        'a',
+        { href: '/authorize' },
+        'Authorize'
+      ),
       _react2.default.createElement(
         _reactRouter.Link,
         { to: '/about' },
@@ -107,7 +112,7 @@ var UnknownRoute = _react2.default.createClass({
   { history: _reactRouter.browserHistory },
   _react2.default.createElement(
     _reactRouter.Route,
-    { path: '/', component: Home },
+    { path: '/', component: Login },
     _react2.default.createElement(_reactRouter.Route, { path: 'about', component: About }),
     _react2.default.createElement(
       _reactRouter.Route,
