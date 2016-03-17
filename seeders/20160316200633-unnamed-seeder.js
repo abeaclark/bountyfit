@@ -5,7 +5,7 @@ module.exports = {
       return queryInterface.bulkInsert('users', [{
         firstName: 'John',
         lastName: 'Doe',
-        fitbitID: '123452'
+        fitbitToken: '123452'
       }],
       {}
       );

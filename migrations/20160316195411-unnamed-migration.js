@@ -16,8 +16,17 @@ module.exports = {
         lastName: {
           type: Sequelize.STRING,
         },
-        fitbitID: {
+        fitbitToken: {
           type: Sequelize.STRING,
+        },
+        avatar: {
+          type: Sequelize.STRING,
+        },
+        gender: {
+          type: Sequelize.STRING,
+        },
+        age: {
+          type: Sequelize.INTEGER,
         },
         createdAt: {
           type: Sequelize.DATE
@@ -28,6 +37,12 @@ module.exports = {
       }
     )
   },
+
+
+
+
+
+
 
   down: function (queryInterface, Sequelize) {
     /*

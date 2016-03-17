@@ -11,28 +11,52 @@ passport.use(new FitbitStrategy(
     callbackURL: "http://localhost:3000/auth/fitbit/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    models.user.findOrCreate({where: {fitbitID: profile.id}})
+    models.user.findOrCreate({where: {fitbitToken: profile.id}})
       .spread(function(user) {
-        console.log(user.get({
-          plain: true
-        }))
+        console.log(profile)
+        // console.log(user);
+        if (user) {
+          var userData = profile._json.user
+          var name_array = userData.fullName.split(' ')
+          user.firstName = name_array[0]
+          user.lastName = name_array[1]
+          user.avatar = userData.avatar
+          user.age = userData.age
+          user.gender = userData.gender
+          user.save();
+        }
+        // if (err) { return done(err); }
+        // if (!user) {
+        //   return done(null, false, { message: 'Login failed.' });
+        // }
+        return done(null, user);
       })
-    // console.log(created)
   }));
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
 
 
-//     findOrCreate({where: {fitbitId: String(profile.id)}, defaults: {username: 'defaultUserName'} }, function (err, user) {
-//       return done(err, user);
-//     });
-//   }
-// ));
+router.get('/fitbit',
+  passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }
+));
 
-router.get('/fitbit', passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile']}));
+router.get( '/fitbit/callback', passport.authenticate( 'fitbit', {
+        successRedirect: '/auth/fitbit/success',
+        failureRedirect: '/auth/fitbit/failure'
+}));
 
-router.get('/fitbit/callback',
-  passport.authenticate('fitbit', { successRedirect: '/',
-                                      failureRedirect: '/' }));
+router.get('/fitbit/success', function(req, res, next) {
+  res.send(req.user)
+});
 
+router.get('/fitbit/failure', function(req, res, next) {
+  res.send(req.err)
+});
 
 module.exports = router;
