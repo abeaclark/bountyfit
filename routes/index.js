@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var models = require('../models');
 import { graphql } from 'graphql';
 import bodyParser from 'body-parser';
 
@@ -25,7 +25,7 @@ router.get("/authorize", function (req, res) {
 
 router.get("/callback", function (req, res) {
     client.getAccessToken(req.query.code, 'http://localhost:3000/callback').then(function (result) {
-        client.get("/profile.json", result.access_token).then(function (results) {
+        client.get("/activities.json", result.access_token).then(function (results) {
             res.send(results[0]);
         });
     }).catch(function (error) {
