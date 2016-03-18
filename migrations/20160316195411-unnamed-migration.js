@@ -16,7 +16,10 @@ module.exports = {
         lastName: {
           type: Sequelize.STRING,
         },
-        fitbitToken: {
+        fitbitAuthToken: {
+          type: Sequelize.STRING,
+        },
+        fitbitID: {
           type: Sequelize.STRING,
         },
         avatar: {

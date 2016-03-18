@@ -4,33 +4,12 @@ var models = require('../models');
 import { graphql } from 'graphql';
 import bodyParser from 'body-parser';
 
-var FitbitApiClient = require("fitbit-node")
-var client = new FitbitApiClient(process.env.fitbit_client_id, process.env.fitbit_client_secret);
-
-
-
-
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
-});
-
-// router.use(bodyParser.text({ type: 'application/graphql' }));
-
-router.get("/authorize", function (req, res) {
-    res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:3000/callback'));
-});
-
-router.get("/callback", function (req, res) {
-    client.getAccessToken(req.query.code, 'http://localhost:3000/callback').then(function (result) {
-        client.get("/activities.json", result.access_token).then(function (results) {
-            res.send(results[0]);
-        });
-    }).catch(function (error) {
-        res.send(error);
-    });
+  console.log(req.user);
+  res.render('index', {user: req.user});
 });
 
 module.exports = router;

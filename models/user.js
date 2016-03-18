@@ -2,7 +2,8 @@
 
 module.exports = function(sequelize, DataTypes) {
   var user = sequelize.define("user", {
-    fitbitToken: DataTypes.STRING,
+    fitbitID: DataTypes.STRING,
+    fitbitAuthToken: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     avatar: DataTypes.STRING,

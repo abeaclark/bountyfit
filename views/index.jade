@@ -2,7 +2,10 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Welcome #{user.firstName}
+  img(src="#{user.avatar}" style="border-radius: 100%;")
+  p #{user.gender}
+  p Age: #{user.age}
   #react-mount
 
 

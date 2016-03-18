@@ -11,7 +11,6 @@ import schema from './graphql/schema.js';
 var session = require('express-session');
 var passport = require('passport')
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var auth = require('./routes/auth');
 
 
@@ -28,20 +27,32 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
 
-app.use('/graphql', GraphQLHTTP({
-  schema,
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+app.use('/graphql', GraphQLHTTP(req => ({
+  schema: schema,
+  rootValue: { user: req.user},
   graphiql: true
-  })
+  }))
 );
 
+
 app.use('/', routes);
-app.use('/users', users);
 app.use('/auth', auth);
 
 // catch 404 and forward to error handler
